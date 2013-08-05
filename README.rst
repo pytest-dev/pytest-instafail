@@ -23,11 +23,11 @@ Installation
 
 To install pytest-instafail::
 
-    $ pip install pytest-instafail
+    $ pip install pytest-instafail
 
 Then run your tests with::
 
-    $ py.test --instafail
+    $ py.test --instafail
 
 Resources
 ---------
