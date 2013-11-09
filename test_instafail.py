@@ -37,9 +37,7 @@ def option(request, n):
         "default": Option(verbose=False, n=n),
         "verbose": Option(verbose=True, n=n),
         "quiet": Option(quiet=True, n=n),
-        }[request.param]
-
-
+    }[request.param]
 
 
 class TestInstafailingTerminalReporter(object):
