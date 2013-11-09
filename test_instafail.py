@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 pytest_plugins = "pytester"
+import pytest
 
 
 class Option(object):
-    def __init__(self, verbose=False, quiet=False):
+    def __init__(self, verbose=False, quiet=False, n=None):
         self.verbose = verbose
         self.quiet = quiet
+        self.n = None
 
     @property
     def args(self):
@@ -15,17 +17,29 @@ class Option(object):
             l.append('-v')
         if self.quiet:
             l.append('-q')
+        if self.n is not None:
+            self.args.extend(['-n', str(self.n)])
         return l
 
 
-def pytest_generate_tests(metafunc):
-    if "option" in metafunc.fixturenames:
-        metafunc.addcall(id="default",
-                         funcargs={'option': Option(verbose=False)})
-        metafunc.addcall(id="verbose",
-                         funcargs={'option': Option(verbose=True)})
-        metafunc.addcall(id="quiet",
-                         funcargs={'option': Option(quiet=True)})
+@pytest.fixture(params=['normal', '1 slave', '2 slave'])
+def n(request):
+    return {
+        'normal': None,
+        '1 slave': 1,
+        '2 slave': 2,
+    }[request.param]
+
+
+@pytest.fixture(params=['default', 'verbose', 'quiet'])
+def option(request, n):
+    return {
+        "default": Option(verbose=False, n=n),
+        "verbose": Option(verbose=True, n=n),
+        "quiet": Option(quiet=True, n=n),
+        }[request.param]
+
+
 
 
 class TestInstafailingTerminalReporter(object):
