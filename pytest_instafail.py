@@ -53,7 +53,7 @@ class InstafailingTerminalReporter(TerminalReporter):
         # Show failures and errors occuring during running a test
         # instantly.
         TerminalReporter.pytest_runtest_logreport(self, report)
-        if report.failed:
+        if report.failed and not hasattr(report, 'wasxfail'):
             if self.verbosity <= 0:
                 self._tw.line()
             self.print_failure(report)
