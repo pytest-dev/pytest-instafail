@@ -243,3 +243,51 @@ class TestInstafailingTerminalReporter(object):
             result.stdout.fnmatch_lines([
                 "collected 0 items / 1 errors",
             ])
+
+    def test_xfail(self, testdir, option):
+        testdir.makepyfile(
+            """
+            import pytest
+            @pytest.mark.xfail
+            def test_func():
+                assert 0
+            """
+        )
+        result = testdir.runpytest(*option.args)
+        if option.verbose:
+            result.stdout.fnmatch_lines([
+                "test_xfail.py:2: test_func xfail"
+            ])
+        elif option.quiet:
+            result.stdout.fnmatch_lines([
+                "x"
+            ])
+        else:
+            result.stdout.fnmatch_lines([
+                "test_xfail.py x"
+            ])
+
+    def test_xfail_unexpected_success(self, testdir, option):
+        testdir.makepyfile(
+            """
+            import pytest
+            @pytest.mark.xfail
+            def test_func():
+                pass
+            """
+        )
+        result = testdir.runpytest(*option.args)
+        if option.verbose:
+            result.stdout.fnmatch_lines([
+                "test_xfail_unexpected_success.py:2: test_func XPASS"
+            ])
+        elif option.quiet:
+            result.stdout.fnmatch_lines([
+                "X"
+            ])
+        else:
+            result.stdout.fnmatch_lines([
+                "test_xfail_unexpected_success.py X"
+            ])
+        # is there a better way to do this?
+        assert "INTERNALERROR" not in result.stdout.str()
