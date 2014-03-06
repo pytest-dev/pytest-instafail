@@ -3,6 +3,11 @@ Changelog
 
 Here you can see the full list of changes between each pytest-instafail release.
 
+0.2.0 (not yet released)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Drop support for Python 2.5
+
 0.1.1 (November 9, 2013)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
