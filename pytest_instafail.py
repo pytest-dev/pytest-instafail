@@ -5,7 +5,7 @@ pytest_instafail
 
 py.test plugin to show failures instantly.
 
-:copyright: (c) 2013 by Janne Vanhala.
+:copyright: (c) 2013-2014 by Janne Vanhala.
 :license: BSD, see LICENSE for more details.
 """
 import pytest
