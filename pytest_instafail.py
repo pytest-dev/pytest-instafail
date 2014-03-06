@@ -82,4 +82,5 @@ class InstafailingTerminalReporter(TerminalReporter):
                 elif report.when == "teardown":
                     msg = "ERROR at teardown of " + msg
                 self.write_sep("_", msg)
-                self._outrep_summary(report)
+                if not self.config.getvalue("usepdb"):
+                    self._outrep_summary(report)

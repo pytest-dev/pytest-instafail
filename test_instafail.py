@@ -243,3 +243,24 @@ class TestInstafailingTerminalReporter(object):
             result.stdout.fnmatch_lines([
                 "collected 0 items / 1 errors",
             ])
+
+    def test_print_stacktrace_once_with_pdb(self, testdir, request, option):
+        test_file = testdir.makepyfile(
+            """
+            def test_func():
+                assert 0
+            """
+        )
+
+        args = option.args
+        args.append(" --pdb %s" % test_file)
+
+        child = testdir.spawn_pytest(' '.join(args))
+        child.expect('>+ traceback >+')
+
+        assert 'E       assert 0' not in child.before
+
+        child.expect('(Pdb)')
+        child.sendeof()
+        if child.isalive():
+            child.wait()
