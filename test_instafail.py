@@ -264,3 +264,27 @@ class TestInstafailingTerminalReporter(object):
         child.sendeof()
         if child.isalive():
             child.wait()
+
+    def test_xfail_unexpected_success(self, testdir, option):
+        testdir.makepyfile(
+            """
+            import pytest
+            @pytest.mark.xfail
+            def test_func():
+                pass
+            """
+        )
+        result = testdir.runpytest(*option.args)
+        if option.verbose:
+            result.stdout.fnmatch_lines([
+                "test_xfail_unexpected_success.py:2: test_func XPASS"
+            ])
+        elif option.quiet:
+            result.stdout.fnmatch_lines([
+                "X"
+            ])
+        else:
+            result.stdout.fnmatch_lines([
+                "test_xfail_unexpected_success.py X"
+            ])
+        assert "INTERNALERROR" not in result.stdout.str()
