@@ -16,7 +16,7 @@ setup(
     platforms='any',
     install_requires=['pytest>=2.3'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX',
