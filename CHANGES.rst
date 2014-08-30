@@ -3,6 +3,13 @@ Changelog
 
 Here you can see the full list of changes between each pytest-instafail release.
 
+0.3.0 (August 30, 2014)
+^^^^^^^^^^^^^^^^^^^^^^^
+
+- Added support for Python 3.4
+- Added support for py.test 2.6
+- Fixed failing tests on py.test 2.6
+
 0.2.0 (March 6, 2014)
 ^^^^^^^^^^^^^^^^^^^^^
 
