@@ -21,13 +21,20 @@ def pytest_addoption(parser):
             "default)."
         )
     )
+    parser.addini(
+        "instafail", default=False, type="bool",
+        help=(
+            "show failures and errors instantly as they occur (disabled by "
+            "default)."
+        )
+    )
 
 
 @pytest.mark.trylast
 def pytest_configure(config):
     if hasattr(config, 'slaveinput'):
         return  # xdist slave, we are already active on the master
-    if config.option.instafail:
+    if config.option.instafail or config.getini('instafail'):
         # Get the standard terminal reporter plugin...
         standard_reporter = config.pluginmanager.getplugin('terminalreporter')
         instafail_reporter = InstafailingTerminalReporter(standard_reporter)
