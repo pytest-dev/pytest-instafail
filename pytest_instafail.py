@@ -46,7 +46,8 @@ class InstafailingTerminalReporter(TerminalReporter):
         # Show errors occurred during the collection instantly.
         TerminalReporter.pytest_collectreport(self, report)
         if report.failed:
-            self.rewrite("")  # erase the "collecting" message
+            if self.isatty:
+                self.rewrite('')  # erase the "collecting"/"collected" message
             self.print_failure(report)
 
     def pytest_runtest_logreport(self, report):
