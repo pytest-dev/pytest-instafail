@@ -5,14 +5,17 @@ import pytest
 
 
 class Option(object):
-    def __init__(self, verbose=False, quiet=False, n=None):
+    def __init__(self, verbose=False, quiet=False, n=None, ini=False):
         self.verbose = verbose
         self.quiet = quiet
         self.n = None
+        self.ini = ini
 
     @property
     def args(self):
-        l = ['--instafail']
+        l = []
+        if self.ini is False:
+            l.append('--instafail')
         if self.verbose:
             l.append('-v')
         if self.quiet:
@@ -31,17 +34,25 @@ def n(request):
     }[request.param]
 
 
-@pytest.fixture(params=['default', 'verbose', 'quiet'])
+@pytest.fixture(params=['default', 'verbose', 'quiet', 'ini'])
 def option(request, n):
     return {
         "default": Option(verbose=False, n=n),
         "verbose": Option(verbose=True, n=n),
         "quiet": Option(quiet=True, n=n),
+        "ini": Option(ini=True, n=n),
     }[request.param]
 
 
 class TestInstafailingTerminalReporter(object):
     def test_fail(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile(
             """
             import pytest
@@ -76,6 +87,13 @@ class TestInstafailingTerminalReporter(object):
             ])
 
     def test_fail_fail(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile(
             """
             import pytest
@@ -129,6 +147,13 @@ class TestInstafailingTerminalReporter(object):
             ])
 
     def test_error_in_setup_then_pass(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile(
             """
             def setup_function(function):
@@ -180,6 +205,13 @@ class TestInstafailingTerminalReporter(object):
         assert result.ret != 0
 
     def test_error_in_teardown_then_pass(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile(
             """
             def teardown_function(function):
@@ -231,6 +263,13 @@ class TestInstafailingTerminalReporter(object):
         assert result.ret != 0
 
     def test_collect_error(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile("""raise ValueError(0)""")
         result = testdir.runpytest(*option.args)
         result.stdout.fnmatch_lines([
@@ -245,6 +284,13 @@ class TestInstafailingTerminalReporter(object):
             ])
 
     def test_print_stacktrace_once_with_pdb(self, testdir, request, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         test_file = testdir.makepyfile(
             """
             def test_func():
@@ -266,6 +312,13 @@ class TestInstafailingTerminalReporter(object):
             child.wait()
 
     def test_xfail_unexpected_success(self, testdir, option):
+        if option.ini:
+            testdir.makeini(
+                '''
+                [pytest]
+                instafail=True
+                '''
+            )
         testdir.makepyfile(
             """
             import pytest
