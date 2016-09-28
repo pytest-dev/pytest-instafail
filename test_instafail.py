@@ -258,7 +258,7 @@ class TestInstafailingTerminalReporter(object):
         child = testdir.spawn_pytest(' '.join(args))
         child.expect('>+ traceback >+')
 
-        assert 'E       assert 0' not in child.before
+        assert b'E       assert 0' not in child.before
 
         child.expect('(Pdb)')
         child.sendeof()
