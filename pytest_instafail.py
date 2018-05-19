@@ -27,7 +27,7 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     if hasattr(config, 'slaveinput'):
         return  # xdist slave, we are already active on the master
-    if config.option.instafail:
+    if config.option.instafail and config.pluginmanager.hasplugin('terminalreporter'):
         # Get the standard terminal reporter plugin...
         standard_reporter = config.pluginmanager.getplugin('terminalreporter')
         instafail_reporter = InstafailingTerminalReporter(standard_reporter)
