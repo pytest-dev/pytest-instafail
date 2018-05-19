@@ -163,7 +163,7 @@ class TestInstafailingTerminalReporter(object):
                 "*setup func*",
                 "*assert 0*",
                 "test_error_in_setup_then_pass.py:4: AssertionError",
-                ".",
+                ".*",
             ])
         else:
             result.stdout.fnmatch_lines([
@@ -174,7 +174,7 @@ class TestInstafailingTerminalReporter(object):
                 "*assert 0*",
                 "test_error_in_setup_then_pass.py:4: AssertionError",
                 "",
-                "*test_error_in_setup_then_pass.py .",
+                "*test_error_in_setup_then_pass.py .*",
                 "*1 error*",
             ])
         assert result.ret != 0
@@ -214,7 +214,7 @@ class TestInstafailingTerminalReporter(object):
                 "*teardown func*",
                 "*assert 0*",
                 "test_error_in_teardown_then_pass.py:4: AssertionError",
-                ".",
+                ".*",
             ])
         else:
             result.stdout.fnmatch_lines([
@@ -225,7 +225,7 @@ class TestInstafailingTerminalReporter(object):
                 "*assert 0*",
                 "test_error_in_teardown_then_pass.py:4: AssertionError",
                 "",
-                "*test_error_in_teardown_then_pass.py .",
+                "*test_error_in_teardown_then_pass.py .*",
                 "*1 error*",
             ])
         assert result.ret != 0
@@ -277,14 +277,14 @@ class TestInstafailingTerminalReporter(object):
         result = testdir.runpytest(*option.args)
         if option.verbose:
             result.stdout.fnmatch_lines([
-                "test_xfail_unexpected_success.py:*:*test_func XPASS"
+                "test_xfail_unexpected_success.py:*:*test_func XPASS*"
             ])
         elif option.quiet:
             result.stdout.fnmatch_lines([
-                "X"
+                "X*"
             ])
         else:
             result.stdout.fnmatch_lines([
-                "test_xfail_unexpected_success.py X"
+                "test_xfail_unexpected_success.py X*"
             ])
         assert "INTERNALERROR" not in result.stdout.str()
