@@ -6,12 +6,13 @@ Here you can see the full list of changes between each pytest-instafail release.
 0.4.0 (not yet released)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Added support for Python 3.5
-- Dropped support for Python 3.2
-- Dropped support for pytest < 2.9
+- Added support for Python 3.5, 3.6, and 3.7.
+- Dropped support for Python 2.7, 3.2, and 3.3.
+- Dropped support for pytest < 2.9.
 - Only rewrite lines on tty. Previously you would end up with a \r (^M) in case
   collecting of tests failed, and pytest's output is piped to a file. Thanks
   @blueyed for the PR.
+- Support -p no:terminal (#12). Thanks @Maratori for the PR.
 
 0.3.0 (August 30, 2014)
 ^^^^^^^^^^^^^^^^^^^^^^^
