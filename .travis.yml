@@ -1,21 +1,26 @@
 language: python
-python:
-  - 2.7
-env:
-  matrix:
-    # Please use "tox --listenvs" to populate the build matrix below.
-    - TESTENV=py26-pytest29
-    - TESTENV=py27-pytest29
-    - TESTENV=py33-pytest29
-    - TESTENV=py34-pytest29
-    - TESTENV=py35-pytest29
-    - TESTENV=pypy-pytest29
-    - TESTENV=py26-pytest30
-    - TESTENV=py27-pytest30
-    - TESTENV=py33-pytest30
-    - TESTENV=py34-pytest30
-    - TESTENV=py35-pytest30
-    - TESTENV=pypy-pytest30
+matrix:
+  include:
+    - python: 2.7
+      env: TESTENV=py27-pytest2
+    - python: 2.7
+      env: TESTENV=py27-pytest3
+    - python: 3.4
+      env: TESTENV=py34-pytest2
+    - python: 3.4
+      env: TESTENV=py34-pytest3
+    - python: 3.5
+      env: TESTENV=py35-pytest2
+    - python: 3.5
+      env: TESTENV=py35-pytest3
+    - python: 3.6
+      env: TESTENV=py36-pytest2
+    - python: 3.6
+      env: TESTENV=py36-pytest3
+    - python: 3.7-dev
+      env: TESTENV=py37-pytest2
+    - python: 3.7-dev
+      env: TESTENV=py37-pytest3
 install:
   - pip install -U tox
 script:
