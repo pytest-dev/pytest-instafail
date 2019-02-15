@@ -3,6 +3,11 @@ Changelog
 
 Here you can see the full list of changes between each pytest-instafail release.
 
+0.4.1 (February 15, 2019)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed compatibility with pytest 4.2.0. Thanks @blueyed for the PR.
+
 0.4.0 (May 19, 2018)
 ^^^^^^^^^^^^^^^^^^^^
 
