@@ -3,11 +3,11 @@ pytest-instafail
 
 |build status|_
 
-.. |build status| image:: https://secure.travis-ci.org/pytest-dev/pytest-instafail.png?branch=master
+.. |build status| image:: https://travis-ci.org/pytest-dev/pytest-instafail.svg?branch=master
    :alt: Build Status
-.. _build status: http://travis-ci.org/pytest-dev/pytest-instafail
+.. _build status: https://travis-ci.org/pytest-dev/pytest-instafail
 
-pytest-instafail is a plugin for `pytest <http://pytest.org>`_ that shows
+pytest-instafail is a plugin for `pytest <https://pytest.org>`_ that shows
 failures and errors instantly instead of waiting until the end of test session.
 
 Requirements
@@ -32,7 +32,7 @@ Then run your tests with::
 Resources
 ---------
 
-- `Issue Tracker <http://github.com/pytest-dev/pytest-instafail/issues>`_
-- `Code <http://github.com/pytest-dev/pytest-instafail/>`_
+- `Issue Tracker <https://github.com/pytest-dev/pytest-instafail/issues>`_
+- `Code <https://github.com/pytest-dev/pytest-instafail/>`_
 - `Development Version
-  <http://github.com/pytest-dev/pytest-instafail/zipball/master#egg=pytest-instafail-dev>`_
+  <https://github.com/pytest-dev/pytest-instafail/zipball/master#egg=pytest-instafail-dev>`_
