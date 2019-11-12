@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pytest-instafail',
-    description='py.test plugin to show failures instantly',
+    description='pytest plugin to show failures instantly',
     long_description=open("README.rst").read(),
     version='0.4.1',
     url='https://github.com/pytest-dev/pytest-instafail',
@@ -15,6 +15,7 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=['pytest>=2.9'],
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -28,10 +29,10 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: PyPy',
     ]
 )
