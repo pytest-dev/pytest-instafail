@@ -22,12 +22,12 @@ class Option(object):
         return l
 
 
-@pytest.fixture(params=['normal', '1 slave', '2 slave'])
+@pytest.fixture(params=['normal', '1 worker', '2 worker'])
 def n(request):
     return {
         'normal': None,
-        '1 slave': 1,
-        '2 slave': 2,
+        '1 worker': 1,
+        '2 worker': 2,
     }[request.param]
 
 
