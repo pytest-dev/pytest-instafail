@@ -241,7 +241,7 @@ class TestInstafailingTerminalReporter(object):
         ])
         if not option.quiet:
             result.stdout.fnmatch_lines([
-                "collected 0 items / 1 errors",
+                "collected 0 items / 1 error*",
             ])
 
     def test_print_stacktrace_once_with_pdb(self, testdir, request, option):
