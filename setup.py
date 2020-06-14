@@ -4,7 +4,7 @@ setup(
     name='pytest-instafail',
     description='pytest plugin to show failures instantly',
     long_description=open("README.rst").read(),
-    version='0.4.1',
+    version='0.4.2',
     url='https://github.com/pytest-dev/pytest-instafail',
     license='BSD',
     author='Janne Vanhala',

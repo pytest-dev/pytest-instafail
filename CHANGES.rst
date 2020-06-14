@@ -3,6 +3,12 @@ Changelog
 
 Here you can see the full list of changes between each pytest-instafail release.
 
+0.4.2 (June 14, 2020)
+^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed usage of deprecated pytest-xdist slave aliases (#20).
+- Fixed failing tests on pytest 5
+
 0.4.1 (February 15, 2019)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
