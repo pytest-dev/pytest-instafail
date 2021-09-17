@@ -3,9 +3,9 @@ pytest-instafail
 
 |build status|_
 
-.. |build status| image:: https://travis-ci.org/pytest-dev/pytest-instafail.svg?branch=master
+.. |build status| image:: https://github.com/pytest-dev/pytest-instafail/actions/workflows/test.yml/badge.svg
    :alt: Build Status
-.. _build status: https://travis-ci.org/pytest-dev/pytest-instafail
+.. _build status: https://github.com/pytest-dev/pytest-instafail/actions/workflows/test.yml
 
 pytest-instafail is a plugin for `pytest <https://pytest.org>`_ that shows
 failures and errors instantly instead of waiting until the end of test session.
