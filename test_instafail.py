@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-
 pytest_plugins = "pytester"
 import pytest
 
 
-class Option(object):
+class Option:
     def __init__(self, verbose=False, quiet=False, n=None):
         self.verbose = verbose
         self.quiet = quiet
@@ -40,7 +38,7 @@ def option(request, n):
     }[request.param]
 
 
-class TestInstafailingTerminalReporter(object):
+class TestInstafailingTerminalReporter:
     def test_fail(self, testdir, option):
         testdir.makepyfile(
             """
