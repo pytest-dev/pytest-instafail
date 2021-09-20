@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 pytest_instafail
 ~~~~~~~~~~~~~~~~
@@ -76,13 +75,11 @@ class InstafailingTerminalReporter(TerminalReporter):
                 self.write_line(line)
             else:
                 msg = self._getfailureheadline(report)
-                # "when" was unset before pytest 4.2 for collection errors.
-                when = getattr(report, "when", "collect")
-                if when == "collect":
+                if report.when == "collect":
                     msg = "ERROR collecting " + msg
-                elif when == "setup":
+                elif report.when == "setup":
                     msg = "ERROR at setup of " + msg
-                elif when == "teardown":
+                elif report.when == "teardown":
                     msg = "ERROR at teardown of " + msg
                 self.write_sep("_", msg)
                 if not self.config.getvalue("usepdb"):
