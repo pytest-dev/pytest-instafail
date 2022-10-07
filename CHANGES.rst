@@ -3,6 +3,12 @@ Changelog
 
 Here you can see the full list of changes between each pytest-instafail release.
 
+0.4.3 (not yet released)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Use ``pytest.hookimpl`` to configure hooks, avoiding a deprecation warning in
+  the upcoming pytest 7.2.0.
+
 0.4.2 (June 14, 2020)
 ^^^^^^^^^^^^^^^^^^^^^
 
