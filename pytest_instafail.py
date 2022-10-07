@@ -22,7 +22,7 @@ def pytest_addoption(parser):
     )
 
 
-@pytest.mark.trylast
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config):
     if hasattr(config, 'workerinput'):
         return  # xdist worker, we are already active on the master
