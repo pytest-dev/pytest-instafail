@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ["pypy-3.7", "pypy-3.8", "pypy-3.9", "3.7", "3.8", "3.9", "3.10-dev"]
+        python-version: ["pypy-3.7", "pypy-3.8", "pypy-3.9", "3.7", "3.8", "3.9", "3.10", "3.11"]
         pytest-tox-version: ["pytest5", "pytest6"]
         include:
           # Add new variables to existing jobs
@@ -22,10 +22,12 @@ jobs:
           - {python-version: "3.7", python-tox-version: "py37"}
           - {python-version: "3.8", python-tox-version: "py38"}
           - {python-version: "3.9", python-tox-version: "py39"}
-          - {python-version: "3.10-dev", python-tox-version: "py310"}
+          - {python-version: "3.10", python-tox-version: "py310"}
+          - {python-version: "3.11", python-tox-version: "py311"}
         exclude:
           # Remove jobs with incompatible combinations
-          - {python-version: "3.10-dev", pytest-tox-version: "pytest5"}
+          - {python-version: "3.10", pytest-tox-version: "pytest5"}
+          - {python-version: "3.11", pytest-tox-version: "pytest5"}
 
     steps:
       - uses: actions/checkout@v3
