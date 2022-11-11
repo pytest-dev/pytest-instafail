@@ -9,6 +9,7 @@ Here you can see the full list of changes between each pytest-instafail release.
 - Use ``pytest.hookimpl`` to configure hooks, avoiding a deprecation warning in
   the upcoming pytest 7.2.0.
 - Dropped support for Python 3.6.
+- Added support for Python 3.11.
 
 0.4.2 (June 14, 2020)
 ^^^^^^^^^^^^^^^^^^^^^
