@@ -15,7 +15,7 @@ Requirements
 
 You will need the following prerequisites in order to use pytest-instafail:
 
-- Python 3.6+ or PyPy3
+- Python 3.7+ or PyPy3
 - pytest 5 or newer
 
 Installation

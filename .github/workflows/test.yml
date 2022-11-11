@@ -12,14 +12,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ["pypy-3.7", "pypy-3.8", "pypy-3.9", "3.6", "3.7", "3.8", "3.9", "3.10-dev"]
+        python-version: ["pypy-3.7", "pypy-3.8", "pypy-3.9", "3.7", "3.8", "3.9", "3.10-dev"]
         pytest-tox-version: ["pytest5", "pytest6"]
         include:
           # Add new variables to existing jobs
           - {python-version: "pypy-3.7", python-tox-version: "pypy37"}
           - {python-version: "pypy-3.8", python-tox-version: "pypy38"}
           - {python-version: "pypy-3.9", python-tox-version: "pypy39"}
-          - {python-version: "3.6", python-tox-version: "py36"}
           - {python-version: "3.7", python-tox-version: "py37"}
           - {python-version: "3.8", python-tox-version: "py38"}
           - {python-version: "3.9", python-tox-version: "py39"}
