@@ -12,25 +12,26 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ["pypy-3.7", "pypy-3.8", "pypy-3.9", "3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["pypy-3.8", "pypy-3.9", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         pytest-tox-version: ["pytest5", "pytest6"]
         include:
           # Add new variables to existing jobs
-          - {python-version: "pypy-3.7", python-tox-version: "pypy37"}
           - {python-version: "pypy-3.8", python-tox-version: "pypy38"}
           - {python-version: "pypy-3.9", python-tox-version: "pypy39"}
-          - {python-version: "3.7", python-tox-version: "py37"}
           - {python-version: "3.8", python-tox-version: "py38"}
           - {python-version: "3.9", python-tox-version: "py39"}
           - {python-version: "3.10", python-tox-version: "py310"}
           - {python-version: "3.11", python-tox-version: "py311"}
+          - {python-version: "3.12", python-tox-version: "py312"}
+          - {python-version: "3.13", python-tox-version: "py313"}
+          - {python-version: "3.14", python-tox-version: "py314"}
         exclude:
           # Remove jobs with incompatible combinations
-          - {python-version: "3.10", pytest-tox-version: "pytest5"}
-          - {python-version: "3.11", pytest-tox-version: "pytest5"}
+          - {python-version: "3.13", pytest-tox-version: "pytest6"}
+          - {python-version: "3.14", pytest-tox-version: "pytest6"}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4.3.0
