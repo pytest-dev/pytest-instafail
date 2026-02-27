@@ -33,6 +33,8 @@ jobs:
           - {python-version: "3.14", pytest-tox-version: "pytest7"}
           - {python-version: "3.8", pytest-tox-version: "pytest9"}
           - {python-version: "3.9", pytest-tox-version: "pytest9"}
+          - {python-version: "pypy-3.8", pytest-tox-version: "pytest9"}
+          - {python-version: "pypy-3.9", pytest-tox-version: "pytest9"}
 
     steps:
       - uses: actions/checkout@v6
