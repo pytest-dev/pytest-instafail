@@ -29,6 +29,8 @@ jobs:
           # Remove jobs with incompatible combinations
           - {python-version: "3.13", pytest-tox-version: "pytest6"}
           - {python-version: "3.14", pytest-tox-version: "pytest6"}
+          - {python-version: "3.8", pytest-tox-version: "pytest9"}
+          - {python-version: "3.9", pytest-tox-version: "pytest9"}
 
     steps:
       - uses: actions/checkout@v6
