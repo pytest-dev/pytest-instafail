@@ -6,7 +6,7 @@ class Option:
     def __init__(self, verbose=False, quiet=False, n=None):
         self.verbose = verbose
         self.quiet = quiet
-        self.n = None
+        self.n = n
 
     @property
     def args(self):
@@ -16,7 +16,7 @@ class Option:
         if self.quiet:
             l.append('-q')
         if self.n is not None:
-            self.args.extend(['-n', str(self.n)])
+            l.extend(['-n', str(self.n)])
         return l
 
 
@@ -39,6 +39,17 @@ def option(request, n):
 
 
 class TestInstafailingTerminalReporter:
+    @pytest.mark.parametrize('workers', [1, 2])
+    def test_worker_option_runs_on_xdist_workers(self, testdir, workers):
+        testdir.makepyfile(
+            """
+            def test_worker(request):
+                assert hasattr(request.config, 'workerinput')
+            """
+        )
+        result = testdir.runpytest(*Option(n=workers).args)
+        result.assert_outcomes(passed=1)
+
     def test_fail(self, testdir, option):
         testdir.makepyfile(
             """
@@ -50,13 +61,14 @@ class TestInstafailingTerminalReporter:
         result = testdir.runpytest(*option.args)
         if option.verbose:
             result.stdout.fnmatch_lines([
-                "*test_fail.py:*:*test_func*FAIL*",
+                ("*FAILED test_fail.py::test_func*" if option.n is not None
+                 else "*test_fail.py:*:*test_func*FAIL*"),
                 "* test_func *",
                 "    def test_func():",
                 ">       assert 0",
                 "E       assert 0",
             ])
-        elif option.quiet:
+        elif option.quiet or option.n is not None:
             result.stdout.fnmatch_lines([
                 "F",
                 "* test_func *",
@@ -84,6 +96,20 @@ class TestInstafailingTerminalReporter:
             """
         )
         result = testdir.runpytest(*option.args)
+        if option.n is not None:
+            result.assert_outcomes(failed=2)
+            for name in ('test_func', 'test_func2'):
+                result.stdout.fnmatch_lines([
+                    "* %s *" % name,
+                    "    def %s():" % name,
+                    ">       assert 0",
+                    "E       assert 0",
+                ])
+                if option.verbose:
+                    result.stdout.fnmatch_lines([
+                        "*FAILED test_fail_fail.py::%s*" % name,
+                    ])
+            return
         if option.verbose:
             result.stdout.fnmatch_lines([
                 "*test_fail_fail.py:*:*test_func*FAIL*",
@@ -141,6 +167,23 @@ class TestInstafailingTerminalReporter:
         )
         result = testdir.runpytest(*option.args)
 
+        if option.n is not None:
+            result.assert_outcomes(passed=1, errors=1)
+            result.stdout.fnmatch_lines([
+                "*ERROR at setup of test_nada*",
+                "*setup_function(function):*",
+                "*if function is test_nada:*",
+                "*assert 0*",
+                "test_error_in_setup_then_pass.py:4: AssertionError",
+                "*Captured stdout setup*",
+                "setup func",
+            ])
+            if option.verbose:
+                result.stdout.fnmatch_lines_random([
+                    "*ERROR test_error_in_setup_then_pass.py::test_nada*",
+                    "*PASSED test_error_in_setup_then_pass.py::test_zip*",
+                ])
+            return
         if option.verbose:
             result.stdout.fnmatch_lines([
                 "*test_error_in_setup_then_pass.py:*:*test_nada*ERROR*",
@@ -192,6 +235,23 @@ class TestInstafailingTerminalReporter:
         )
         result = testdir.runpytest(*option.args)
 
+        if option.n is not None:
+            result.assert_outcomes(passed=2, errors=1)
+            result.stdout.fnmatch_lines([
+                "*ERROR at teardown of test_nada*",
+                "*teardown_function(function):*",
+                "*if function is test_nada:*",
+                "*assert 0*",
+                "test_error_in_teardown_then_pass.py:4: AssertionError",
+                "*Captured stdout teardown*",
+                "teardown func",
+            ])
+            if option.verbose:
+                result.stdout.fnmatch_lines_random([
+                    "*ERROR test_error_in_teardown_then_pass.py::test_nada*",
+                    "*PASSED test_error_in_teardown_then_pass.py::test_zip*",
+                ])
+            return
         if option.verbose:
             result.stdout.fnmatch_lines([
                 "*test_error_in_teardown_then_pass.py:*:*test_nada*ERROR*",
@@ -237,12 +297,16 @@ class TestInstafailingTerminalReporter:
             "*   raise ValueError(0)",
             "E   ValueError: 0",
         ])
-        if not option.quiet:
+        if option.n is not None:
+            result.assert_outcomes(errors=option.n)
+        elif not option.quiet:
             result.stdout.fnmatch_lines([
                 "collected 0 items / 1 error*",
             ])
 
     def test_print_stacktrace_once_with_pdb(self, testdir, request, option):
+        if option.n is not None:
+            pytest.skip("--pdb is incompatible with xdist workers")
         test_file = testdir.makepyfile(
             """
             def test_func():
@@ -275,9 +339,11 @@ class TestInstafailingTerminalReporter:
         result = testdir.runpytest(*option.args)
         if option.verbose:
             result.stdout.fnmatch_lines([
-                "test_xfail_unexpected_success.py:*:*test_func XPASS*"
+                ("*XPASS test_xfail_unexpected_success.py::test_func*"
+                 if option.n is not None
+                 else "test_xfail_unexpected_success.py:*:*test_func XPASS*")
             ])
-        elif option.quiet:
+        elif option.quiet or option.n is not None:
             result.stdout.fnmatch_lines([
                 "X*"
             ])
